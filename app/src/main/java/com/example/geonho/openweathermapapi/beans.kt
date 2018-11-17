@@ -8,11 +8,11 @@ data class Weather(val id:Int,
                    val description:String?,
                    val icon:String?)
 
-data class Main(val temp:Double
-                ,val pressure:Int
-                ,val humidity:Int
-                ,val temp_min:Int
-                ,val temp_max:Int)
+data class Main(val temp:String?
+                ,val pressure:Double
+                ,val humidity:Double
+                ,val temp_min:Double
+                ,val temp_max:Double)
 
 data class Wind(val speed:Double
                 ,val deg:Int)
