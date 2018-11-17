@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">OpenWeatherMapAPI</string>
+    <string name="api_key">271658afc7d2e742895d027ffe764b47</string>
 </resources>

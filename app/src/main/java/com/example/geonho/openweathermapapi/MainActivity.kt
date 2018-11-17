@@ -1,5 +1,6 @@
 package com.example.geonho.openweathermapapi
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.location.LocationListener
@@ -38,8 +39,8 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks{
             lon=location.longitude
             lat=location.latitude
             Log.d("asdf","lat : ${location.latitude} lon : ${location.longitude}")
-            call = weatherService.getWeather(lat,lon,"metric","271658afc7d2e742895d027ffe764b47")
-            loadData()
+            call = weatherService.getWeather(lat,lon,"metric",resources.getString(R.string.api_key))
+            loadData()g
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
@@ -95,6 +96,7 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks{
                 Log.d("error", t.message)
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<ApiInfo>, response: Response<ApiInfo>) {
                 icon.loadUrl("http://openweathermap.org/img/w/"+response.body()!!.weather[0].icon+".png")
                 temp.text = response.body()!!.main.temp + "°C"
