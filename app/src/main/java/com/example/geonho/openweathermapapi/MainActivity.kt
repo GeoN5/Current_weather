@@ -19,28 +19,27 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks{
-
+class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks{
 
     private val retrofit = Retrofit.Builder()
             .baseUrl("http://api.openweathermap.org")
             .addConverterFactory(GsonConverterFactory.create())
             .build()!!
 
-    val weatherService = retrofit.create(WeatherService::class.java)!!
+    private val weatherService = retrofit.create(WeatherService::class.java)!!
+    private var lat: Double = 0.0
+    private var lon: Double = 0.0
+    private lateinit var call: Call<ApiInfo>
+    private lateinit var locationManager: LocationManager
 
-    var lon:Double=0.0
-    var lat:Double=0.0
-    lateinit var call: Call<ApiInfo>
-    lateinit var locationManager : LocationManager
+    private val mLocationListener: LocationListener = object: LocationListener{
 
-    private val mLocationListener:LocationListener=object :LocationListener{
         override fun onLocationChanged(location: Location) {
-            lon=location.longitude
             lat=location.latitude
-            Log.d("asdf","lat : ${location.latitude} lon : ${location.longitude}")
+            lon=location.longitude
+            Log.d("abc","lat : $lat / lon : $lon")
             call = weatherService.getWeather(lat,lon,"metric",resources.getString(R.string.api_key))
-            loadData()g
+            loadData()
         }
 
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
@@ -65,16 +64,15 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks{
         updateLocation()
 
         refreshButton.setOnClickListener {
-            updateLocation()
+                updateLocation()
             }
         }
 
         private fun updateLocation(){
-            if(EasyPermissions.hasPermissions(this@MainActivity,android.Manifest.permission.ACCESS_COARSE_LOCATION)&&
-                    EasyPermissions.hasPermissions(this@MainActivity,android.Manifest.permission.ACCESS_FINE_LOCATION)){
+            if(EasyPermissions.hasPermissions(this@MainActivity,android.Manifest.permission.ACCESS_FINE_LOCATION)){
                 try {
-                    Log.d("test","start")
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0.1f,mLocationListener)
+                    Log.d("qwer","start")
+                    //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0.1f,mLocationListener)
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0.1f,mLocationListener)
                 }catch (e : SecurityException){
                     Toast.makeText(applicationContext,"권한이 필요합니다!",Toast.LENGTH_LONG).show()
@@ -86,7 +84,8 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks{
     }
 
     private fun requestPermissions(){
-        EasyPermissions.requestPermissions(this@MainActivity,"현재 위치 획득을 위해서는 권한이 필요합니다",300,android.Manifest.permission.ACCESS_FINE_LOCATION)
+        EasyPermissions.requestPermissions(this@MainActivity,"현재 위치 획득을 위해서는 권한이 필요합니다",
+                300,android.Manifest.permission.ACCESS_FINE_LOCATION)
     }
 
     fun loadData(){
@@ -95,16 +94,15 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks{
                 Toast.makeText(applicationContext,"알 수 없는 오류로 인해 데이터를 가져올 수 없습니다!",Toast.LENGTH_LONG).show()
                 Log.d("error", t.message)
             }
-
             @SuppressLint("SetTextI18n")
             override fun onResponse(call: Call<ApiInfo>, response: Response<ApiInfo>) {
                 icon.loadUrl("http://openweathermap.org/img/w/"+response.body()!!.weather[0].icon+".png")
                 temp.text = response.body()!!.main.temp + "°C"
                 cityName.text = response.body()!!.name
-                status.text = response.body()!!.weather[0].description
+                status.text = response.body()!!.weather[0].main
+                description.text = response.body()!!.weather[0].description
                 locationManager.removeUpdates(mLocationListener)
             }
-
         })
     }
 
@@ -117,7 +115,7 @@ class MainActivity : AppCompatActivity() , EasyPermissions.PermissionCallbacks{
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-       updateLocation()
+        updateLocation()
     }
 
     fun ImageView.loadUrl(url:String){

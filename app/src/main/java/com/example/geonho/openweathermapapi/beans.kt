@@ -8,14 +8,14 @@ data class Weather(val id:Int,
                    val description:String?,
                    val icon:String?)
 
-data class Main(val temp:String?
-                ,val pressure:Double
-                ,val humidity:Double
-                ,val temp_min:Double
-                ,val temp_max:Double)
+data class Main(val temp:String?,
+                val pressure:Double,
+                val humidity:Double,
+                val temp_min:Double,
+                val temp_max:Double)
 
-data class Wind(val speed:Double
-                ,val deg:Int)
+data class Wind(val speed:Double,
+                val deg:Int)
 
 data class Clouds(val all:Int)
 
@@ -23,7 +23,7 @@ data class Sys(val type:Int,
                val id:Int,
                val message:Double,
                val country:String,
-               val sunrice:Long,
+               val sunrise:Long,
                val sunset:Long)
 
 data class ApiInfo(val coord: Coord,

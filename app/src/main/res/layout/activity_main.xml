@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,64 +12,63 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_launcher_foreground"
         android:layout_marginTop="100dp"
-        tools:ignore="ContentDescription" />
+        tools:src="@drawable/ic_launcher_foreground"/>
 
     <TextView
         android:id="@+id/temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20pt"
-        android:textColor="@android:color/white"
-        android:textAlignment="center"
         android:layout_below="@+id/icon"
         android:layout_marginTop="20dp"
-        android:text="6°C" />
+        android:text="6°C"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/cityName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
         android:layout_below="@+id/temp"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        android:text="Seoul"
         android:layout_marginTop="10dp"
-        android:textAlignment="center"/>
+        android:text="Seoul"
+        android:textAlignment="center"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15pt"
         android:layout_below="@+id/cityName"
-        android:textColor="@android:color/white"
         android:layout_marginTop="10dp"
+        android:text="Cloudy"
         android:textAlignment="center"
-        android:text="Cloudy"/>
+        android:textColor="@android:color/white"
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/status"
-        android:textSize="10pt"
-        android:textColor="@android:color/white"
-        android:text="scattered clouds"
         android:layout_marginTop="10dp"
-        android:textAlignment="center"/>
+        android:text="scattered clouds"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="25sp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/refreshButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_refresh_black_24dp"
-        android:tint="@android:color/white"
-        android:elevation="10dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:layout_alignParentEnd="true" />
+        android:elevation="10dp"
+        android:src="@drawable/ic_refresh_black_24dp"
+        android:tint="@android:color/white" />
 
 </RelativeLayout>
